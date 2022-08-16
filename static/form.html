@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Meta tags -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+  <meta name="viewport" content="width=device-width" />
+
+  <!-- Favicon and title -->
+  <link rel="icon" href="path/to/fav.png">
+  <title>Starter template - Halfmoon</title>
+
+  <!-- Halfmoon CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/halfmoon@1.1.1/css/halfmoon-variables.min.css" rel="stylesheet" />
+  <!--
+    Or,
+    Use the following (no variables, supports IE11):
+    <link href="https://cdn.jsdelivr.net/npm/halfmoon@1.1.1/css/halfmoon.min.css" rel="stylesheet" />
+    Learn more: https://www.gethalfmoon.com/docs/customize/#notes-on-browser-compatibility
+  -->
+</head>
+<body class="with-custom-webkit-scrollbars with-custom-css-scrollbars" data-dm-shortcut-enabled="true" data-set-preferred-mode-onload="true">
+  <!-- Modals go here -->
+  <!-- Reference: https://www.gethalfmoon.com/docs/modal -->
+
+  <!-- Page wrapper start -->
+  <div class="page-wrapper with-navbar">
+
+    <!-- Navbar start -->
+    <nav class="navbar">
+      <!-- Reference: https://www.gethalfmoon.com/docs/navbar -->
+    </nav>
+    <!-- Navbar end -->
+
+    <!-- Content wrapper start -->
+    <div class="content-wrapper">
+      <form action="/form" method="post" class="w-400 mw-full"> <!-- w-400 = width: 40rem (400px), mw-full = max-width: 100% -->
+        <!-- Input -->
+        <div class="form-group">
+          <label for="full-name" class="required">Full name</label>
+          <input type="text" class="form-control" id="full-name" placeholder="Full name" required="required" name="name">
+        </div>
+      
+        <!-- Radio -->
+        <div class="form-group">
+          <label for="gender-male" class="required">Gender</label>
+          <div class="custom-radio">
+            <input type="radio" name="gender" id="gender-male" value="male" required="required" name="male">
+            <label for="gender-male">Male</label>
+          </div>
+          <div class="custom-radio">
+            <input type="radio" name="gender" id="gender-female" value="female" required="required" name="female">
+            <label for="gender-female">Female</label>
+          </div>
+          <div class="custom-radio">
+            <input type="radio" name="gender" id="gender-other" value="other" required="required" name="other">
+            <label for="gender-other">Other</label>
+          </div>
+        </div>
+      
+        <!-- Select -->
+        <div class="form-group">
+          <label for="area-of-specialization" class="required">Area of specialization</label>
+          <select class="form-control" id="area-of-specialization" required="required" name="specialization">
+            <option value="" selected="selected" disabled="disabled">Select your area of specialization</option>
+            <option value="front-end">Front-end</option>
+            <option value="back-end">Back-end</option>
+            <option value="full-stack">Full-stack</option>
+          </select>
+        </div>
+      
+        <!-- Submit button -->
+        <input class="btn btn-primary" type="submit" value="Submit" name="Submit">
+      </form>
+      
+      <!-- Required for the custom file input -->
+      <script src="path/to/halfmoon.js"></script>
+      <!--
+        Add your page's main content here
+        Examples:
+        1. https://www.gethalfmoon.com/docs/content-and-cards/#building-a-page
+        2. https://www.gethalfmoon.com/docs/grid-system/#building-a-dashboard
+      -->
+    </div>
+    <!-- Content wrapper end -->
+
+  </div>
+  <!-- Page wrapper end -->
+
+  <!-- Halfmoon JS -->
+  <script src="https://cdn.jsdelivr.net/npm/halfmoon@1.1.1/js/halfmoon.min.js"></script>
+</body>
+</html>
