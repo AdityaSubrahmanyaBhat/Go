@@ -8,7 +8,7 @@ import (
 	"os/user"
 	"path/filepath"
 	"sync"
-
+	"strings"
 	errorHandler "github.com/AdityaSubrahmanyaBhat/golang/dashDB/Error"
 	// dbFunctions "github.com/AdityaSubrahmanyaBhat/golang/dashDB/Functions"
 	address "github.com/AdityaSubrahmanyaBhat/golang/dashDB/models/Address"
@@ -73,10 +73,10 @@ func (d *Driver) CreateNewDB(dir string, options *Options) (*Driver, error) {
 
 func (d *Driver) Write(collection string, recordItem string, v interface{}) error {
 	if collection == ""{
-		fmt.Errorf("Missing collection name")
+		return fmt.Errorf("missing collection name")
 	}
 	if recordItem == ""{
-		fmt.Errorf("Missing record item")
+		return fmt.Errorf("missing record item")
 	}
 
 	mutex := d.GetOrCreateMutex(collection)
@@ -107,10 +107,10 @@ func (d *Driver) Write(collection string, recordItem string, v interface{}) erro
 
 func (d *Driver) Read(collection string, recordItem string, v interface{}) error{
 	if collection == ""{
-		fmt.Errorf("Missing collection")
+		return fmt.Errorf("missing collection")
 	}
 	if recordItem == ""{
-		fmt.Errorf("Missing record item")
+		return fmt.Errorf("missing record item")
 	}
 	record := filepath.Join(d.dir, collection, recordItem)
 
@@ -127,7 +127,7 @@ func (d *Driver) Read(collection string, recordItem string, v interface{}) error
 
 func (d *Driver) ReadAll(collection string) ([]string, error){
 	if collection == ""{
-		return nil, fmt.Errorf("Missing collection")
+		return nil, fmt.Errorf("missing collection")
 	}
 
 	dir := filepath.Join(d.dir, collection)
@@ -142,7 +142,7 @@ func (d *Driver) ReadAll(collection string) ([]string, error){
 	var records []string
 
 	for _, file := range files{
-		b, err := ioutil.ReadFile(filepath.Join(dir, file.Name()))
+		b, err := ioutil.ReadFile(filepath.Join(dir, strings.ToLower(file.Name())))
 		if err != nil{
 			return nil, err
 		}
@@ -152,7 +152,7 @@ func (d *Driver) ReadAll(collection string) ([]string, error){
 }
 
 func (d *Driver) Delete(collection string, recordName string) error {
-	path := filepath.Join(collection, recordName)
+	path := filepath.Join(collection, strings.ToLower(recordName))
 	mutex :=d.GetOrCreateMutex(collection)
 	mutex.Lock()
 	defer mutex.Unlock()
@@ -160,7 +160,7 @@ func (d *Driver) Delete(collection string, recordName string) error {
 	dir := filepath.Join(d.dir, path)
 
 	switch fi, err :=stat(dir); {
-	case fi == nil, err != nil : return fmt.Errorf("Unable to find file")
+	case fi == nil, err != nil : return fmt.Errorf("unable to find file")
 	case fi.Mode().IsDir() : return os.RemoveAll(dir)
 	case fi.Mode().IsRegular() : return os.RemoveAll(dir + ".json")
 	}
@@ -190,11 +190,11 @@ func main() {
 		{"Aditya", "21", "jpmc", address.Address{"Mysuru", "Karnataka", "India", "570002"}},
 		{"pranav", "21", "siemens", address.Address{"Mysuru", "Karnataka", "India", "570002"}},
 		{"prashanth", "21", "halodoc", address.Address{"Bangalore", "Karnataka", "India", "560002"}},
-		{"gajanana", "21", "halodoc", address.Address{"Mysuru", "Karnataka", "India", "570002"}},
+		{"Gajanana", "21", "halodoc", address.Address{"Mysuru", "Karnataka", "India", "570002"}},
 	}
 
 	for _, record := range employees {
-		dashDB.Write("users", record.Name, u.User{
+		dashDB.Write("users", strings.ToLower(record.Name), u.User{
 			Name:    record.Name,
 			Age:     record.Age,
 			Company: record.Company,
@@ -217,11 +217,11 @@ func main() {
 
 	fmt.Println(allUsers)
 
-	if err := dashDB.Delete("users", "prashanth"); err != nil{
-		errorHandler.HandleError(err)
-	}
-
-	if err := dashDB.Delete("users", ""); err != nil{
-		errorHandler.HandleError(err)
-	}
+	// if err := dashDB.Delete("users", "Prashanth"); err != nil{
+	// 	errorHandler.HandleError(err)
+	// }
+	
+	// if err := dashDB.Delete("users", ""); err != nil{
+	// 	errorHandler.HandleError(err)
+	// }
 }
